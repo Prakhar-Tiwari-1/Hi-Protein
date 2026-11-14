@@ -94,7 +94,9 @@ Import the GitHub repo in Vercel, then:
 
 - **Root Directory:** `frontend`
 - **Framework preset:** Vite (auto-detected)
-- Build command and output directory come from `frontend/vercel.json`; leave them alone.
+- Vite's defaults apply (`npm run build`, output `dist`). The cache headers that used to
+  live in `frontend/vercel.json` now sit on the `frontend` service in the root
+  `vercel.json`; add them back as a `frontend/vercel.json` if you deploy this way.
 - **Environment variable**, for all environments:
 
   ```
