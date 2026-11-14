@@ -9,6 +9,10 @@
 </p>
 
 <p align="center">
+  <a href="https://hi-protein.vercel.app"><img alt="Live demo on Vercel" src="https://img.shields.io/badge/%E2%96%B6%20LIVE%20DEMO-hi--protein.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white"></a>
+</p>
+
+<p align="center">
   <a href="../../actions/workflows/ci.yml"><img alt="CI" src="../../actions/workflows/ci.yml/badge.svg"></a>
   <img alt="Python 3.11" src="https://img.shields.io/badge/python-3.11-3776ab">
   <img alt="React 18" src="https://img.shields.io/badge/react-18-61dafb">
@@ -16,7 +20,30 @@
   <a href="LICENSE"><img alt="Licence" src="https://img.shields.io/badge/licence-Apache%202.0-blue"></a>
 </p>
 
+<p align="center">
+  <a href="https://hi-protein.vercel.app"><strong>Live demo</strong></a> ·
+  <a href="#demo-video">Demo video</a> ·
+  <a href="#quickstart">Quickstart</a> ·
+  <a href="#deployment">Deployment</a> ·
+  <a href="#documentation">Docs</a> ·
+  <a href="#known-limitations">Limitations</a>
+</p>
+
 ---
+
+## Demo video
+
+<p align="center">
+  <a href="frontend/public/promo-video/hi-protein-final.mp4" title="Watch the 25-second walkthrough">
+    <img src="docs/images/promo-poster.jpg" alt="Hi-Protein promo video: Which pulse beats your rotation?" width="720">
+  </a>
+  <br>
+  <sub>▶ 25-second walkthrough — click to play (<a href="frontend/public/promo-video/hi-protein-final.mp4">hi-protein-final.mp4</a>, 34 MB)</sub>
+</p>
+
+---
+
+## What it does
 
 Track 3, Hack the Fork Paris 2026, answering the brief directly:
 
@@ -44,6 +71,22 @@ series, IGN RPG parcel geometry and ADEME Agribalyse impacts are all genuinely
 fetched and parsed, not mocked. Buyer contract terms are the one deliberate
 exception and are labelled as demo data everywhere they appear.
 
+### See it in action
+
+A farmer picks a parcel, sets the soil and the current rotation, and gets a risk-aware
+answer. Frames from the demo video, from the real app:
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/images/step1-pick-parcel.jpg" alt="Step 1: pick your field on the map"><br><sub><b>1. Pick your field.</b> Click the map to load a real IGN RPG parcel and its declared crop history.</sub></td>
+    <td width="50%"><img src="docs/images/step2-set-rotation.jpg" alt="Step 2: set soil, area and current three-year rotation"><br><sub><b>2. Set soil, area and the current 3-year rotation.</b> Choose the pulse to test in year 2.</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/images/step3-chance-of-gain.jpg" alt="Step 3: 76% chance the pulse beats your current rotation"><br><sub><b>3. Read the odds.</b> Median gain, and the chance the pulse beats the current rotation.</sub></td>
+    <td width="50%"><img src="docs/images/step4-bad-year.jpg" alt="Step 4: the bad-year number, 1 in 7"><br><sub><b>4. See the risk, not just the upside.</b> The bad-year outcome and the grading fraction needed to break even.</sub></td>
+  </tr>
+</table>
+
 ---
 
 ## Why the food tier, specifically
@@ -70,8 +113,6 @@ share — `sovereignty.target_basis` now states which denominator is in use, bec
 
 ---
 
----
-
 ## Quickstart
 
 ```bash
@@ -94,6 +135,24 @@ make help           # every target
 
 ---
 
+## Deployment
+
+**Production: [hi-protein.vercel.app](https://hi-protein.vercel.app)**, deployed from `main`
+as one Vercel project with two [services](https://vercel.com/docs/services), defined in
+[`vercel.json`](vercel.json):
+
+| Service | What it is | Public routes |
+|---|---|---|
+| `frontend` | Vite + React bundle, built from `frontend/` | everything else (`/`) |
+| `api` | FastAPI engine, built from the repo's [`Dockerfile`](Dockerfile) and run on Vercel's container runtime (beta) | `/api/v1/*`, `/health` |
+
+Both sit behind one domain, so the browser calls the API same-origin: no CORS setup and
+no `VITE_API_BASE`. The `api` service needs `PORT=8080` set as a project environment
+variable. Why the API runs as a container rather than a Python function, the alternatives,
+and managing the data are in **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)**.
+
+---
+
 ## Documentation
 
 | Read this | For |
@@ -107,7 +166,7 @@ make help           # every target
 | [docs/LITERATURE_AND_CALIBRATION.md](docs/LITERATURE_AND_CALIBRATION.md) | How the parameters check out against published work |
 | [docs/LIMITATIONS.md](docs/LIMITATIONS.md) | Everything known to be weak about it |
 | [docs/RUNNING.md](docs/RUNNING.md) | Every way to run it, and the proxy problems each one solves |
-| [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Containerising it, hosting the frontend on Vercel, and managing the data |
+| [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Containerising it, deploying on Vercel, and managing the data |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | The rules that matter here, starting with provenance tags |
 
 ---
@@ -167,8 +226,6 @@ pulse footprint fourfold.
 
 ---
 
----
-
 ## What was changed from the blueprint
 
 Twenty changes, each because the original would have produced a wrong number or
@@ -210,8 +267,6 @@ Four more found late, all worth knowing about:
   lentil on a 2-year gap against a 6-year *Aphanomyces* interval.
 - **`MLT` is Millet, not a legume mix.** It was mislabelled in every vintage, which
   would have shown a user millet as a nitrogen-fixing precedent.
-
----
 
 ---
 
